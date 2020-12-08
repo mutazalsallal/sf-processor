@@ -25,8 +25,8 @@ import (
 	"github.com/sysflow-telemetry/sf-apis/go/logger"
 	"github.com/sysflow-telemetry/sf-apis/go/plugins"
 	"github.com/sysflow-telemetry/sf-apis/go/sfgo"
-	"github.ibm.com/sysflow/sf-processor/core/cache"
-	"github.ibm.com/sysflow/sf-processor/core/flattener"
+	"github.com/sysflow-telemetry/sf-processor/core/cache"
+	"github.com/sysflow-telemetry/sf-processor/core/flattener"
 )
 
 const (
@@ -137,6 +137,7 @@ func (s *SysFlowProcessor) Process(ch interface{}, wg *sync.WaitGroup) {
 			file := s.getFile(fe.FileOID)
 			file2 := s.getOptFile(fe.NewFileOID)
 			s.hdl.HandleFileEvt(s.hdr, cont, proc, file, file2, fe)
+		case sfgo.SF_PROC_FLOW:
 		case sfgo.SF_NET_EVT:
 		default:
 			logger.Warn.Println("Error unsupported SysFlow Type: ", sf.Rec.UnionType)

@@ -26,7 +26,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/sysflow-telemetry/sf-apis/go/ioutils"
 	"github.com/sysflow-telemetry/sf-apis/go/logger"
-	. "github.ibm.com/sysflow/sf-processor/core/policyengine/engine"
+	. "github.com/sysflow-telemetry/sf-processor/core/policyengine/engine"
 )
 
 var pi PolicyInterpreter
@@ -38,7 +38,14 @@ func SetupInterpreter(m *testing.M) {
 
 func TestCompile(t *testing.T) {
 	logger.Trace.Println("Running test compile")
-	paths, err := ioutils.ListFilePaths("../../../resources/policies/tests/ma.yaml", ".yaml")
+	paths, err := ioutils.ListFilePaths("../../../resources/policies/tests", ".yaml")
+	assert.NoError(t, err)
+	assert.NoError(t, pi.Compile(paths...))
+}
+
+func TestCompileDist(t *testing.T) {
+	logger.Trace.Println("Running test compile")
+	paths, err := ioutils.ListFilePaths("../../../resources/policies/distribution/filter.yaml", ".yaml")
 	assert.NoError(t, err)
 	assert.NoError(t, pi.Compile(paths...))
 }
